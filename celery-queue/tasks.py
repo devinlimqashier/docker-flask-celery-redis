@@ -1,7 +1,6 @@
 import os
 import socket
 import sys
-import time
 from celery import Celery
 
 
@@ -11,12 +10,6 @@ CELERY_CREATE_MISSING_QUEUES = True
 
 celery = Celery('tasks', broker=CELERY_BROKER_URL, backend=CELERY_RESULT_BACKEND,
                 task_create_missing_queues=CELERY_CREATE_MISSING_QUEUES)
-
-
-@celery.task()
-def add(x: int, y: int) -> int:
-    time.sleep(5)
-    return x + y
 
 @celery.task()
 def printer(ip: str, message: str):
