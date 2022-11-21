@@ -8,14 +8,6 @@ dev_mode = True
 app = Flask(__name__)
 r = redis.Redis(host="redis")
 
-
-@app.route('/add/<int:param1>/<int:param2>')
-def add(param1: int, param2: int) -> str:
-    task = celery.send_task('tasks.add', args=[param1, param2], kwargs={}, queue='')
-    response = f"<a href='{url_for('check_task', task_id=task.id, external=True)}'>check status of {task.id} </a>"
-    return response
-
-
 @app.route('/check/<string:task_id>')
 def check_task(task_id: str) -> str:
     res = celery.AsyncResult(task_id)
@@ -42,7 +34,6 @@ def printer():
 # The below code is trying to get/set a queue pool from a redis (in memory database)  server
 # The part i have not figured out here is the storage/retrieval of a list/array in Redis
 def getQueue(ip: str):
-    print(r)
     if not r.get("queue_pool"): r.json().set("queue_pool", [f"queue_{x}" for x in range(20)])
     print(r.get("queue_pool"))
     queue_pool = r.get("queue_pool")
