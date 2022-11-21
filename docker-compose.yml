@@ -14,7 +14,7 @@ services:
     build:
       context: ./celery-queue
       dockerfile: Dockerfile
-    command: celery -A tasks worker -l info -E
+    command: sh -c "supervisord -c ./configs/supervisord.conf"
     environment:
       CELERY_BROKER_URL: redis://redis
       CELERY_RESULT_BACKEND: redis://redis

@@ -7,5 +7,7 @@ ENV C_FORCE_ROOT true
 COPY . /queue
 WORKDIR /queue
 
+COPY /configs/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 RUN pip install -U setuptools pip
 RUN pip install -r requirements.txt
