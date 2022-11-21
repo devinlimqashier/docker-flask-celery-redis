@@ -38,6 +38,9 @@ def printer():
     response = f"<a href='{url_for('check_task', task_id=task.id, external=True)}'>check status of {task.id} </a>"
     return response
 
+# WIP.
+# The below code is trying to get/set a queue pool from a redis (in memory database)  server
+# The part i have not figured out here is the storage/retrieval of a list/array in Redis
 def getQueue(ip: str):
     print(r)
     if not r.get("queue_pool"): r.json().set("queue_pool", [f"queue_{x}" for x in range(20)])
